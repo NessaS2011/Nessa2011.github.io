@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Balloon Pop</title>
+
+<style>
+
+  body { margin:0; overflow:hidden; background:#bfe9ff; font-family:sans-serif; }
+
+  #score { position:fixed; top:10px; left:15px; font-size:36px; }
+
+  .balloon { position:absolute; width:110px; height:140px; border-radius:50%;
+
+             cursor:pointer; box-shadow: inset -10px -10px 0 rgba(0,0,0,0.15); }
+
+</style>
+
+</head>
+
+<body>
+
+<div id="score">🎈 0</div>
+
+<script>
+
+  let score = 0;
+
+  const colors = ["red","orange","gold","limegreen","deepskyblue","violet","hotpink"];
+
+  function makeBalloon() {
+
+    const b = document.createElement("div");
+
+    b.className = "balloon";
+
+    b.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+    b.style.left = Math.random()*(window.innerWidth-110) + "px";
+
+    let y = window.innerHeight;
+
+    b.style.top = y + "px";
+
+    document.body.appendChild(b);
+
+    const timer = setInterval(() => {
+
+      y -= 1.5;
+
+      b.style.top = y + "px";
+
+      if (y < -150) { clearInterval(timer); b.remove(); }
+
+    }, 20);
+
+    b.onclick = () => {
+
+      clearInterval(timer);
+
+      b.remove();
+
+      score++;
+
+      document.getElementById("score").textContent = "🎈 " + score;
+
+    };
+
+  }
+
+  setInterval(makeBalloon, 1200);
+
+</script>
+
+</body>
+
+</html>
